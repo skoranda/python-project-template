@@ -5,8 +5,7 @@ on:
     branches: [ main ]
 
 env:
-  # This is necessary to use the latest version of Node.js in the GitHub Actions runner
-  # and prevent spurious warnings.
+  # This is necessary to use the latest version of Node.js in the GitHub Actions runner.
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
@@ -28,7 +27,10 @@ jobs:
           activate-environment: tae
           environment-file: TAE/environment.yaml
           # Do not activate the base conda environment.
-          auto-activate-base: false
+          auto-activate: false
+          # Remove the implicit 'defaults' channel since explicit channels are
+          # specified in the environment.yaml file.
+          conda-remove-defaults: true
 
       - name: Install pytest (if not in environment.yaml)
         # Since GitHub Actions runs each step in a new shell, we need to use bash -l {0}
