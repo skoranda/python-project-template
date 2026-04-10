@@ -20,8 +20,8 @@ jobs:
           # The following line is the name of the environment that will be created
           # in the conda environment using the environment.yml file. This is used to
           # activate the environment in the following steps.
-          activate-environment: github-actions-pytest-env
-          environment-file: TAE/environment.yaml
+          activate-environment: tae
+          environment-file: TAE/environment.yml
           # Do not activate the base conda environment.
           auto-activate-base: false
 
