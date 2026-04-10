@@ -18,16 +18,19 @@ jobs:
           auto-update-conda: true
           python-version: 3.9
           # The following line is the name of the environment that will be created
-          # in the conda environment using the environment.yml file. This is used to
-          # activate the environment in the following steps.
+          # in the conda environment using the environment.yml file. The environment
+          # will be automatically activated in the following steps.
           activate-environment: tae
-          environment-file: TAE/environment.yml
+          environment-file: TAE/environment.yaml
           # Do not activate the base conda environment.
           auto-activate-base: false
 
-      - name: Install pytest (if not in environment.yml)
+      - name: Install pytest (if not in environment.yaml)
         run: conda install pytest
 
       - name: Run tests
+        # Since GitHub Actions runs each step in a new shell, we need to use bash -l {0}
+        # to run the pytest command in the same shell as the conda environment was activated.
+        # So do not remove the line below.
         shell: bash -l {0}
         run: pytest -v
