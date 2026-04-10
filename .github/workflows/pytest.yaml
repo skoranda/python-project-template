@@ -26,11 +26,12 @@ jobs:
           auto-activate-base: false
 
       - name: Install pytest (if not in environment.yaml)
+        # Since GitHub Actions runs each step in a new shell, we need to use bash -l {0}
+        # to run commands in the same shell as the conda environment was activated.
+        # So do not remove the line below or similar lines in subsequent steps.
+        shell: bash -l {0}
         run: conda install pytest
 
       - name: Run tests
-        # Since GitHub Actions runs each step in a new shell, we need to use bash -l {0}
-        # to run the pytest command in the same shell as the conda environment was activated.
-        # So do not remove the line below.
         shell: bash -l {0}
         run: pytest -v
