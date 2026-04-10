@@ -1,0 +1,33 @@
+name: Run Pytest (Conda)
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          python-version: 3.9
+          # The following line is the name of the environment that will be created
+          # in the conda environment using the environment.yml file. This is used to
+          # activate the environment in the following steps.
+          activate-environment: github-actions-pytest-env
+          environment-file: TAE/environment.yml
+          # Do not activate the base conda environment.
+          auto-activate-base: false
+
+      - name: Install pytest (if not in environment.yml)
+        run: conda install pytest
+
+      - name: Run tests
+        shell: bash -l {0}
+        run: pytest -v
